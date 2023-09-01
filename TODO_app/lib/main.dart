@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/controller/dateTime_Controller.dart';
 import 'package:todo_app/controller/platform_controller.dart';
 import 'package:todo_app/views/screens/android_AddPage.dart';
 import 'package:todo_app/views/screens/android_homePage.dart';
@@ -12,7 +13,10 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (context) => platformcontroller(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => dateTimecontroller(),
+        ),
       ],
       child: const MyApp(),
     ),

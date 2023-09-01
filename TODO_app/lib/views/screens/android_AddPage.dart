@@ -7,10 +7,6 @@ class androidAddPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String Task, Date, Time;
-
-    Task = Date = Time = "";
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Task"),
@@ -28,7 +24,6 @@ class androidAddPage extends StatelessWidget {
                   fontSize: 20),
             ),
             TextField(
-              onChanged: (val) => Task = val,
               decoration: InputDecoration(hintText: 'Enter Task Here'),
             ),
             SizedBox(
@@ -41,26 +36,67 @@ class androidAddPage extends StatelessWidget {
                   color: Colors.blue,
                   fontSize: 20),
             ),
-            TextField(
-              onChanged: (val) => Date = val,
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      onPressed: () async {
-                        DateTime? DT = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(
-                            Duration(days: 5),
-                          ),
-                        );
-                        if (DT != null) {
-                          Provider.of<dateTimecontroller>(context)
-                              .dateTimeChange(dateTime: DT);
-                        }
-                      },
-                      icon: Icon(Icons.date_range)),
-                  hintText: Date.isEmpty ? "Date not set" : Date),
+            Row(children: [
+              IconButton(
+                  onPressed: () async {
+                    DateTime? DT = await showDatePicker(
+                      context: context,
+                      initialDate: Provider.of<dateTimecontroller>(context,
+                              listen: false)
+                          .DT,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(
+                        Duration(days: 5),
+                      ),
+                    );
+                    if (DT != null) {
+                      Provider.of<dateTimecontroller>(context, listen: false)
+                          .dateTimeChange(dateTime: DT);
+                    }
+                  },
+                  icon: Icon(Icons.date_range)),
+              Consumer<dateTimecontroller>(builder: (context, Provider, child) {
+                return Text(
+                  "${Provider.DT!.day} / ${Provider.DT!.month} / ${Provider.DT!.year}",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                );
+              }),
+            ]),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Time",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                  fontSize: 20),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    TimeOfDay? TD = await showTimePicker(
+                      context: context,
+                      initialTime: Provider.of<dateTimecontroller>(context,
+                              listen: false)
+                          .TD,
+                    );
+                    if (TD != null) {
+                      Provider.of<dateTimecontroller>(context, listen: false)
+                          .TimeChange(time: TD);
+                    }
+                  },
+                  icon: Icon(Icons.watch_later_outlined),
+                ),
+                Consumer<dateTimecontroller>(
+                    builder: (context, Provider, child) {
+                  return Text(
+                    "${Provider.TD!.hour % 12} : ${Provider.TD!.minute} ",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  );
+                }),
+              ],
             ),
           ],
         ),
