@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/controller/dateTime_Controller.dart';
+import 'package:todo_app/controller/Task_Controller.dart';
 import 'package:todo_app/controller/platform_controller.dart';
 import 'package:todo_app/views/screens/android_AddPage.dart';
 import 'package:todo_app/views/screens/android_homePage.dart';
 import 'package:todo_app/views/screens/iOS_homePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
@@ -15,7 +19,7 @@ void main() {
           create: (context) => platformcontroller(),
         ),
         ChangeNotifierProvider(
-          create: (context) => dateTimecontroller(),
+          create: (context) => taskController(preferences: preferences),
         ),
       ],
       child: const MyApp(),
