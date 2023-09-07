@@ -19,7 +19,7 @@ class taskController extends ChangeNotifier {
   List<String> allTime = [];
   List<String> allDate = [];
 
-  taskDone() {
+  taskDone({required index}) {
     done = !done;
     notifyListeners();
   }

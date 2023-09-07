@@ -14,7 +14,7 @@ class android_HomePage extends StatelessWidget {
         title: const Text("TODO App"),
         leading: Consumer<taskController>(builder: (context, Provider, child) {
           return PopupMenuButton(
-            offset: Offset(20, 40),
+            offset: const Offset(20, 40),
             itemBuilder: (context) => [
               const PopupMenuItem(
                 child: Text("Task Done"),
@@ -32,14 +32,14 @@ class android_HomePage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Dark"))
+                                  child: const Text("Dark"))
                             ],
                           ),
                         );
                       },
-                      icon: Icon(Icons.list));
+                      icon: const Icon(Icons.list));
                 },
-                child: Text("setting"),
+                child: const Text("setting"),
               ),
             ],
           );
@@ -51,7 +51,7 @@ class android_HomePage extends StatelessWidget {
                 Provider.of<platformcontroller>(context, listen: false)
                     .changePlatform();
               },
-              icon: Icon(Icons.apple_rounded)),
+              icon: const Icon(Icons.apple_rounded)),
         ],
       ),
       body: Padding(
@@ -71,15 +71,15 @@ class android_HomePage extends StatelessWidget {
                               activeColor: Colors.blue,
                               value: Provider.done,
                               onChanged: (val) {
-                                Provider.removeTask(task: task);
-                                Provider.taskDone();
+                                Provider.taskDone(index: val);
                               },
                             );
                           }),
                           title: Text(task.T,
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text(task.Time),
-                          trailing: Text(task.Date),
+                              style: const TextStyle(fontWeight: FontWeight.bold)),
+                          // subtitle: Text(task.Time),
+                          trailing: IconButton(
+                              onPressed: () {}, icon: const Icon(Icons.delete)),
                         ),
                       ),
                     );
@@ -111,7 +111,7 @@ class android_HomePage extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
