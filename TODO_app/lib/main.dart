@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/controller/Task_Controller.dart';
 import 'package:todo_app/controller/platform_controller.dart';
 import 'package:todo_app/views/screens/android_AddPage.dart';
+import 'package:todo_app/views/screens/android_donePage.dart';
 import 'package:todo_app/views/screens/android_homePage.dart';
+import 'package:todo_app/views/screens/iOS_AddPage.dart';
 import 'package:todo_app/views/screens/iOS_homePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,12 +47,16 @@ class MyApp extends StatelessWidget {
             routes: {
               '/': (context) => android_HomePage(),
               'add_Page': (context) => androidAddPage(),
+              'Done_Page': (context) => androidDonePage(),
             },
           )
         : CupertinoApp(
             debugShowCheckedModeBanner: false,
             theme: CupertinoThemeData(brightness: Brightness.light),
-            home: iOS_homePage(),
+            routes: {
+              '/': (context) => iOS_homePage(),
+              'add_Page': (context) => iOSAddPage(),
+            },
           );
   }
 }

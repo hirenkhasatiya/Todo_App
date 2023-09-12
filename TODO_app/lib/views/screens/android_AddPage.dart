@@ -84,7 +84,7 @@ class androidAddPage extends StatelessWidget {
                       context: context,
                       initialTime:
                           Provider.of<taskController>(context, listen: false)
-                              .TD,
+                              .timedate,
                     );
                     if (TD != null) {
                       Provider.of<taskController>(context, listen: false)
@@ -95,7 +95,7 @@ class androidAddPage extends StatelessWidget {
                 ),
                 Consumer<taskController>(builder: (context, Provider, child) {
                   return Text(
-                    "${Provider.TD.hour % 12} : ${Provider.TD.minute} ",
+                    "${Provider.timedate.hour % 12} : ${Provider.timedate.minute} ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   );
                 }),
@@ -108,11 +108,11 @@ class androidAddPage extends StatelessWidget {
         onPressed: () {
           Task T = Task(
             Date: task,
-            T: Provider.of<taskController>(context, listen: false)
+            task: Provider.of<taskController>(context, listen: false)
                 .DT
                 .toString(),
             Time: Provider.of<taskController>(context, listen: false)
-                .TD
+                .timedate
                 .toString(),
           );
 

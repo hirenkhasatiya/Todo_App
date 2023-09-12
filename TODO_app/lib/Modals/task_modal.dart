@@ -1,11 +1,11 @@
 class Task {
-  String Date;
+  String task;
   String Time;
-  String T;
+  String Date;
 
   Task({
-    required this.T,
-    required this.Time,
     required this.Date,
+    required this.Time,
+    required this.task,
   });
 }

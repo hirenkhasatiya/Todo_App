@@ -16,29 +16,14 @@ class android_HomePage extends StatelessWidget {
           return PopupMenuButton(
             offset: const Offset(20, 40),
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
+                onTap: () {
+                  Navigator.of(context).pushNamed('Done_Page');
+                },
                 child: Text("Task Done"),
               ),
               PopupMenuItem(
-                onTap: () {
-                  IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text("select theme color"),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Dark"))
-                            ],
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.list));
-                },
+                onTap: () {},
                 child: const Text("setting"),
               ),
             ],
@@ -63,23 +48,45 @@ class android_HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Task task = Provider.getTask[index];
                     return GestureDetector(
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Delete Task"),
+                            actions: [
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Provider.removeTask(index: index);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Delete"),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("Cancel"))
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
                       child: Card(
                         child: ListTile(
-                          leading: Consumer<taskController>(
-                              builder: (context, Provider, child) {
-                            return Checkbox(
-                              activeColor: Colors.blue,
-                              value: Provider.done,
-                              onChanged: (val) {
-                                Provider.taskDone(index: val);
-                              },
-                            );
-                          }),
-                          title: Text(task.T,
-                              style: const TextStyle(fontWeight: FontWeight.bold)),
-                          // subtitle: Text(task.Time),
+                          title: Text(task.task,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                              "${Provider.timedate.hour % 12}:${Provider.timedate.minute}"),
                           trailing: IconButton(
-                              onPressed: () {}, icon: const Icon(Icons.delete)),
+                              onPressed: () {
+                                Provider.doneTask(task: task);
+                                Provider.removeTask(index: index);
+                              },
+                              icon: const Icon(Icons.done)),
                         ),
                       ),
                     );
